@@ -1,0 +1,11 @@
+{% extends 'heart/base.html' %}
+{% block blockName %}
+<h1>index.html</h1>
+<ul>
+{% for object in object_list %}
+    <li><a href="{% url 'heart:detail' object.id %}"> {{ forloop.counter }} - {{ object }}</a></li>
+{% empty %}
+    <li>No entry yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}
