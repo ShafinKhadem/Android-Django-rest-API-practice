@@ -65,16 +65,179 @@
 					"response": []
 				},
 				{
-					"name": "createHealthEntry",
+					"name": "currentUser",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"type": "text",
-								"value": "Token {{token}}"
+								"value": "Token {{token}}",
+								"type": "text"
 							}
 						],
+						"url": {
+							"raw": "{{auth_base}}users/me/",
+							"host": [
+								"{{auth_base}}users"
+							],
+							"path": [
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "jwtAuth",
+			"item": [
+				{
+					"name": "createToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "shafin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "shafin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base}}jwt/create/",
+							"host": [
+								"{{auth_base}}jwt"
+							],
+							"path": [
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "currentUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{auth_base}}users/me/",
+							"host": [
+								"{{auth_base}}users"
+							],
+							"path": [
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refresh",
+									"value": "{{jwt_refresh_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base}}jwt/refresh",
+							"host": [
+								"{{auth_base}}jwt"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "{{jwt_access_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{auth_base}}jwt/verify",
+							"host": [
+								"{{auth_base}}jwt"
+							],
+							"path": [
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fdb3d062-ddf5-4aaa-9c66-a71a7b7a75a8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a57f8c6-ad6e-457e-b2f1-906edf3c7b74",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "authorizedViews",
+			"item": [
+				{
+					"name": "createHealthEntry",
+					"request": {
+						"method": "POST",
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -117,13 +280,7 @@
 					"name": "updateHealthEntry",
 					"request": {
 						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Token {{token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -156,13 +313,7 @@
 					"name": "deleteHealthEntry",
 					"request": {
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Token {{token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": []
@@ -181,40 +332,10 @@
 					"response": []
 				},
 				{
-					"name": "currentUser",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{auth_base}}users/me/",
-							"host": [
-								"{{auth_base}}users"
-							],
-							"path": [
-								"me",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "healthUserView",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Token {{token}}",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{api_base}}health_entries_me/",
 							"host": [
@@ -231,13 +352,7 @@
 					"name": "viewHealthEntry",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Token {{token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{api_base}}health_entries_me/31b71811-7e47-413b-952c-a5bf69350e96/",
 							"host": [
@@ -252,137 +367,41 @@
 					"response": []
 				}
 			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "jwtAuth",
-			"item": [
-				{
-					"name": "createToken",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "shafin",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "shafin",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{auth_base}}jwt/create",
-							"host": [
-								"{{auth_base}}jwt"
-							],
-							"path": [
-								"create"
-							]
-						}
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "Token {{token}}",
+						"type": "string"
 					},
-					"response": []
+					{
+						"key": "key",
+						"value": "Authorization",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2bdfe3b-8e90-4666-9250-1d1dd0414bb2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "currentUser",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTgwNjk5NjUwLCJqdGkiOiJlMjUxZjc2ZDU1YWY0MGIxYTFmNzEyZWE5OWJmYjZlMCIsInVzZXJfaWQiOjF9.3nHcOH1q9WcitiZXp1ht1eLJOU4n2sY6qdzmuEmpPT0",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{auth_base}}users/me",
-							"host": [
-								"{{auth_base}}users"
-							],
-							"path": [
-								"me"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "refreshToken",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "refresh",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU4MDc4NjY0NywianRpIjoiNmNhZTdlMjNhYjRlNDVhZGE0OTAzNzdkYTdhNTc0NDEiLCJ1c2VyX2lkIjoxfQ.iiTCvfJiOQYUZu-qD2ALHelzReH-m6LaNcA9FWub-qA",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{auth_base}}jwt/refresh",
-							"host": [
-								"{{auth_base}}jwt"
-							],
-							"path": [
-								"refresh"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "verifyToken",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTgwNzAwNTQ3LCJqdGkiOiJlZmNjOTAxZjc2YWY0YzA2OTI2NDFiM2ZkOWM4ZmFmMCIsInVzZXJfaWQiOjF9.VJKiP5COAL-0l4aHLM5W553gamsjyZUqLJzLzUH_2lI",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{auth_base}}jwt/verify",
-							"host": [
-								"{{auth_base}}jwt"
-							],
-							"path": [
-								"verify"
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"id": "13981267-7bb5-4056-b148-f3a1974ed892",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -449,26 +468,38 @@
 	],
 	"variable": [
 		{
-			"id": "f20ef1f9-4b1a-4d21-b566-19efe87ebddc",
+			"id": "6a0e5e5d-8d04-41f2-a21e-67a686985caa",
 			"key": "base",
 			"value": "http://127.0.0.1:8000/",
 			"type": "string"
 		},
 		{
-			"id": "c31ee35d-672f-4caf-a199-116f2fbef7fe",
+			"id": "b94ec931-2310-45aa-8807-88bdbf3d4386",
 			"key": "api_base",
 			"value": "{{base}}api/",
 			"type": "string"
 		},
 		{
-			"id": "1b499398-e273-43d1-b6fd-4c474d6a5a34",
+			"id": "208a3f2a-6859-44b6-979f-fa21b65b269a",
 			"key": "auth_base",
 			"value": "{{api_base}}auth/",
 			"type": "string"
 		},
 		{
-			"id": "2d052908-eb42-4e37-9ae7-1b6766b3a1b4",
+			"id": "cb4b0c53-d971-4a68-85e4-6caa9cc76498",
 			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "102a87e6-5894-4317-a6a2-f20ca1709f36",
+			"key": "jwt_access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c35e2ca7-fc8c-413c-bcc5-a4bfb763db20",
+			"key": "jwt_refresh_token",
 			"value": "",
 			"type": "string"
 		}
