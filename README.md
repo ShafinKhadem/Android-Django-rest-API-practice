@@ -18,6 +18,6 @@ It's not feasible to use normal incrementing primary key in a distributed system
 
 ### Biggest mistakes
 
-- Using auto incrementing ID as primary key instead of ID.
+- Using auto incrementing ID as primary key instead of UUID.
 - Forgetting to add django app in settings.py after startapp.
 - Forgetting to handle null pointer exception in android many times.
